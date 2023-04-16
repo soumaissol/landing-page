@@ -1,6 +1,7 @@
 const htmlmin = require("html-minifier");
 const markdownIt = require('markdown-it');
 const pluginRss = require("@11ty/eleventy-plugin-rss");
+const now = String(Date.now())
 
 module.exports = function (eleventyConfig) {
   // PLUGINS
@@ -35,6 +36,13 @@ module.exports = function (eleventyConfig) {
 
   // STATIC FILES
   eleventyConfig.addPassthroughCopy({ './src/static/': '/' });
+
+  // COPY ALPINEJS
+  eleventyConfig.addPassthroughCopy({ './node_modules/alpinejs/dist/cdn.js': './js/alpine.js' })
+
+  eleventyConfig.addShortcode('version', function () {
+    return now
+  })
 
   // TRANSFORM -- Minify HTML Output
   eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
