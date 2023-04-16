@@ -1,0 +1,88 @@
+<section id="contact" class="w-full bg-white tails-selected-element bg-gray-100 py-10" contenteditable="true">
+    <div class="mx-auto max-w-7xl">
+        <div class="flex flex-col lg:flex-row">
+            <div class="relative w-full bg-cover w-6/12">
+                <div class="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0">
+                    <div class="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl">
+                        <div class="relative top-0">
+                            <img src="https://www.maxtalimoveis.com.br/assets/images/logo.png" class="object-cover mt-3 mr-5 w-60">
+                        </div>
+
+                        <p class="text-xl text-gray-700">
+                            Contrate Energia solar para seu imóvel com quem você sabe que pode confiar.
+                            Energia solar ofercida a você em parceria com a Maxtal corretora
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full bg-white w-6/12 rounded-lg shadow-sm">
+                <div class="flex flex-col items-start justify-start w-full h-full p-10 lg:p-16 xl:p-24">
+                    <h4 class="w-full text-3xl font-bold">Solicite um orçamento</h4>
+                    <form action="#" method="POST" class="w-full mb-0 mt-8 space-y-4">
+                        <div>
+                            <label for="email" class="block text-gray-700 font-bold mb-2">Nome completo</label>
+                            <input
+                                type="text"
+                                name="name"
+                                id="name"
+                                placeholder="Digite seu nome"
+                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 font-bold mb-2">E-mail</label>
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                placeholder="Digite seu e-mail"
+                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-gray-700 font-bold mb-2">Telefone</label>
+                            <input
+                                type="tel"
+                                name="phone"
+                                id="phone"
+                                placeholder="Digite seu telefone"
+                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm">
+                        </div>
+                        <div>
+                            <label for="zipcode" class="block text-gray-700 font-bold mb-2">CEP</label>
+                            <input
+                                type="text"
+                                name="zipcode"
+                                id="zipcode"
+                                placeholder="Digite seu CEP"
+                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm">
+                        </div>
+                        <div>
+                            <label for="energy-consumption" class="block text-gray-700 font-bold mb-2">Consumo médio de energia (em R$)</label>
+                            <div class="flex w-full px-4 py-3 border border-gray-200 rounded-lg shadow-sm">
+                                <span class="flex select-none items-center px-3">R$</span>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    min="0.00"
+                                    max="1000000.00"
+                                    name="energy-consumption"
+                                    id="energy-consumption"
+                                    placeholder="0,00"
+                                    class="block flex-1 border-0 bg-transparent py-0 pl-1 placeholder:text-gray-400 focus:ring-0">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="realtor-id" class="block text-gray-700 font-bold mb-2">CRECI</label>
+                            <input
+                                type="text"
+                                name="realtor-id"
+                                id="realtor-id"
+                                placeholder="Digite o CRECI do corretor"
+                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm">
+                        </div>
+                        <button type="submit" class="inline-block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

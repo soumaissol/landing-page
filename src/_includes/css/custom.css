@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 *,
 *::before,
 *::after {
@@ -6,5 +10,8 @@
 
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  background: url('/img/bg.svg');
+}
+
+a {
+  @apply cursor-pointer;
 }
