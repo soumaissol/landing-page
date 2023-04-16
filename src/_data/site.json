@@ -1,11 +1,15 @@
 {
-  "baseURL": "https://hello.world",
-  "author": "hello.world",
-  "description": "hello.world - Venture Capital",
-  "title": "hello.world - Venture Capital",
-  "language": "en",
+  "baseURL": "https://main--reliable-cobbler-783829.netlify.app/",
+  "author": "gabriel.oliveira",
+  "description": "Solar4All - Energia Solar",
+  "title": "Solar4All - Energia Solar",
+  "language": "pt_BR",
   "name": "Solar4all",
   "social": [
+    {
+      "title": "Facebook",
+      "url": "https://facebook.com/#"
+    },
     {
       "title": "Twitter",
       "url": "https://twitter.com/#"
