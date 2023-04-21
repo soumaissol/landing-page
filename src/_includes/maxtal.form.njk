@@ -17,15 +17,16 @@
             <div class="w-full bg-white w-6/12 lg:rounded-lg shadow-sm">
                 <div class="flex flex-col items-start justify-start w-full h-full p-10 lg:p-16 xl:p-24">
                     <h4 class="w-full text-3xl font-bold">Solicite um orçamento</h4>
-                    <form action="#" method="POST" class="w-full mb-0 mt-8 space-y-4">
+                    <form x-data="contactForm" @submit.prevent="submitForm" class="w-full mb-0 mt-8 space-y-4">
                         <div>
-                            <label for="email" class="block text-gray-700 font-bold mb-2">Nome completo</label>
+                            <label for="name" class="block text-gray-700 font-bold mb-2">Nome completo</label>
                             <input
                                 type="text"
                                 name="name"
                                 id="name"
                                 placeholder="Digite seu nome"
                                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                x-model="data.fullName"
                                 required>
                         </div>
                         <div>
@@ -36,6 +37,7 @@
                                 id="email"
                                 placeholder="Digite seu e-mail"
                                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                x-model="data.email"
                                 required>
                         </div>
                         <div>
@@ -45,16 +47,19 @@
                                 name="phone"
                                 id="phone"
                                 placeholder="Digite seu telefone"
-                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm">
+                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                x-model="data.phone"
+                                required>
                         </div>
                         <div>
-                            <label for="zipcode" class="block text-gray-700 font-bold mb-2">CEP</label>
+                            <label for="zip" class="block text-gray-700 font-bold mb-2">CEP</label>
                             <input
                                 type="text"
-                                name="zipcode"
-                                id="zipcode"
+                                name="zip"
+                                id="zip"
                                 placeholder="Digite seu CEP"
                                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                x-model="data.zip"
                                 required>
                         </div>
                         <div>
@@ -70,6 +75,7 @@
                                     id="energy-consumption"
                                     placeholder="0,00"
                                     class="block flex-1 border-0 bg-transparent py-0 pl-1 placeholder:text-gray-400 focus:ring-0"
+                                    x-model="data.energyConsumption"
                                     required>
                             </div>
                         </div>
@@ -81,10 +87,96 @@
                                 id="realtor-id"
                                 placeholder="Digite o CRECI do corretor"
                                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                x-model="data.creci"
                                 required>
                         </div>
-                        <button type="submit" class="inline-block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white">Enviar</button>
+                        <button
+                            type="submit"
+                            :disabled="loading"
+                            class="inline-block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white">
+                            <svg x-show="loading" class="inline animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span x-text="buttonText"></span>
+                        </button>
+
+                        <div x-show="success" class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+                            <p class="font-bold">Solicitação enviada com sucesso!</p>
+                            <p class="text-sm">Em breve você receberá o contato da nossa equipe</p>
+                        </div>
+
+                        <div x-show="hasError" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            <strong class="font-bold">Ops!</strong>
+                            <span class="block sm:inline" x-text="errorMessage"></span>
+                        </div>
                     </form>
+                    <script>
+                        document.addEventListener("alpine:init", () => {
+                          const UNEXPECTED_ERROR = "Erro inesperado. Por favor, tente mais tarde";
+                          const FORM_URL =
+                            "https://0upoqn2yxc.execute-api.sa-east-1.amazonaws.com/prod/contacts";
+
+                          Alpine.data("contactForm", () => ({
+                            success: false,
+                            hasError: false,
+                            loading: false,
+                            buttonText: "Enviar",
+                            errorMessage: '',
+                            data: {
+                              email: "",
+                              phone: "",
+                              fullName: "",
+                              zip: "",
+                              energyConsumption: "",
+                              creci: "",
+                            },
+                            async submitForm() {
+                              console.log(JSON.stringify(this.data));
+
+                              this.errorMessage = "";
+                              this.hasError = false;
+                              this.loading = true;
+                              this.buttonText = 'Processando...';
+                              this.success = false;
+
+                              const response = await fetch(FORM_URL, {
+                                method: "POST",
+                                headers: {
+                                  "Content-Type": "application/json",
+                                  Accept: "application/json",
+                                },
+                                body: JSON.stringify(this.data),
+                              });
+
+                              if (response.ok) {
+                                this.success = true;
+
+                                for (let prop in this.data) {
+                                    this.data[prop] = "";
+                                }
+                              } else {
+                                const body = await response.text();
+                                let error;
+                                try {
+                                  const json = JSON.parse(body);
+                                  error = json.errors[0]?.message || UNEXPECTED_ERROR;
+                                } catch (exception) {
+                                  console.error(exception);
+                                  error = UNEXPECTED_ERROR;
+                                }
+
+                                this.hasError = true;
+                                this.errorMessage = error;
+                              }
+
+                              this.loading = false;
+                              this.buttonText = 'Enviar';
+                            },
+                          }));
+                        });
+                    </script>
+                    <script src="/js/alpine.js?v={% version %}" defer></script>
                 </div>
             </div>
         </div>
