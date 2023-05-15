@@ -15,7 +15,6 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,
@@ -26,6 +25,32 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+      jaffa: {
+        '50': '#fef4ee',
+        '100': '#fde7d7',
+        '200': '#f9cbaf',
+        '300': '#f5a77c',
+        '400': '#ef6d37',
+        '500': '#ec5523',
+        '600': '#de3d18',
+        '700': '#b82c16',
+        '800': '#92251a',
+        '900': '#762118',
+        '950': '#400e0a',
+    },
+    'sunglow': {
+      '50': '#fffbeb',
+      '100': '#fff3c6',
+      '200': '#ffe688',
+      '300': '#ffd34a',
+      '400': '#ffc331',
+      '500': '#f99c07',
+      '600': '#dd7402',
+      '700': '#b75106',
+      '800': '#943d0c',
+      '900': '#7a330d',
+      '950': '#461902',
+    },
     },
     spacing: {
       px: '1px',
@@ -685,6 +710,7 @@ module.exports = {
     }),
     stroke: {
       current: 'currentColor',
+      jaffa: '#ef6d37',
     },
     strokeWidth: {
       0: '0',
