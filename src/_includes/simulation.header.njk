@@ -76,7 +76,7 @@
         
         <div class="my-32 lg:my-16 rounded-lg shadow-sm">
             <div class="w-full p-8 xl:p-16">
-                <form x-data="contactForm" @submit.prevent="submitForm" class="w-full flex flex-col flex-wrap md:flex-row gap-4 md:items-end"/>
+                <form x-data="simulationForm" @submit.prevent="calculate" class="w-full flex flex-col flex-wrap md:flex-row gap-4 md:items-end"/>
                     <input
                         type="hidden"
                         name="agency"
@@ -85,14 +85,16 @@
                         required>
 
                     <div class="flex-1">
-                        <label for="zip" class="block text-gray-200 font-bold mb-2">CEP</label>
+                        <label for="zipCode" class="block text-gray-200 font-bold mb-2">CEP</label>
                         <input
                             type="text"
-                            name="zip"
-                            id="zip"
+                            name="zipCode"
+                            id="zipCode"
                             placeholder="Digite seu CEP"
                             class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent text-white"
-                            x-model="data.zip"
+                            x-mask="99999-999"
+                            x-model="zipCode"
+                            x-on:change.debounce.100ms="zipCode.length === 9 && fetchPowerDistributors(zipCode)"
                             required>
                     </div>
 
@@ -109,20 +111,21 @@
                                 id="energy-consumption"
                                 placeholder="0,00"
                                 class="block flex-1 border-0 bg-transparent py-4 pl-0 text-sm placeholder:text-gray-200 focus:ring-0 text-white"
-                                x-model="data.energyConsumption"
+                                x-model="energyConsumption"
                                 required>
                         </div>
                     </div>
                     <div class="flex-1">
                         <label for="name" class="block text-gray-200 font-bold mb-2">Concessionária</label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            placeholder="Selecione..."
-                            class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent text-white"
-                            x-model="data.fullName"
-                            required>
+                        
+                        <select class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent text-white"
+                              x-model="powerDistributorId"
+                              x-bind:disabled="loading || powerDistributors.length === 0">
+                            <option value="" selected disabled>Selecione...</option>
+                            <template x-for="powerDistributor in powerDistributors" :key="powerDistributor.id">
+                                <option x-text="powerDistributor.name" :value="powerDistributor.id"></option>
+                            </template>
+                        </select>
                     </div>
                     <button
                         type="submit"
@@ -131,6 +134,7 @@
                         <span x-text="buttonText">Faça uma simulação</span>
                     </button>
                 </form>
+                <script src="/js/simulation.js?v={% version %}"></script>
 
                 <div class="grid grid-cols-1 gap-8 my-16 md:grid-cols-3">
                     <div class="relative flex flex-col items-center px-8 py-12 space-y-4 overflow-hidden border border-white rounded-xl" data-rounded="rounded-xl" data-rounded-max="rounded-full">
