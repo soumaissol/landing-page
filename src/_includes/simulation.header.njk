@@ -1,0 +1,203 @@
+<section class="w-full px-3 antialiased bg-black lg:px-6" data-primary="jaffa-400">
+    <div class="mx-auto max-w-7xl">
+        <nav class="flex items-center w-full h-24 select-none" x-data="{ showMenu: false }">
+            <div class="relative flex flex-wrap items-center justify-between w-full h-24 mx-auto font-medium md:justify-center">
+                <a href="/#_" class="md:w-1/3 w-auto py-4 pl-6 pr-4 md:pl-4 md:py-0">
+                    <img src="/img/logo.png" class="h-44" alt="Sou+Sol Logo">
+                </a>
+                <div
+                    class="fixed top-la
+                    -0 left-0 z-40 items-center hidden w-full h-full p-3 text-xl bg-gray-900 bg-opacity-50 md:text-sm
+                        lg:text-base md:w-2/3 md:bg-transparent md:p-0 md:relative md:flex"
+                    :class="{'flex': showMenu, 'hidden': !showMenu }">
+                    <div class="flex-col w-full h-auto h-full overflow-hidden bg-white rounded-lg select-none md:bg-transparent md:rounded-none
+                            md:relative md:flex md:flex-row md:overflow-auto">
+                        <div
+                            class="flex flex-col items-center justify-center w-full h-full mt-12 text-center text-jaffa-700 md:text-orange-100
+                                md:w-2/3 md:mt-0 md:flex-row md:items-center"
+                            data-primary="jaffa-700">
+                            {# <a
+                                href="#"
+                                class="inline-block px-4 py-2 mx-2 font-medium text-left text-jaffa-700 md:text-white md:px-0 lg:mx-3 md:text-center"
+                                data-primary="jaffa-700">Início</a>
+                            <a
+                                href="#"
+                                class="inline-block px-0 px-4 py-2 mx-2 font-medium text-left md:px-0 hover:text-jaffa-800 md:hover:text-white lg:mx-3
+                                    md:text-center"
+                                data-primary="jaffa-800">Benefícios</a>
+                            <a
+                                href="#"
+                                class="inline-block px-0 px-4 py-2 mx-2 font-medium text-left md:px-0 hover:text-jaffa-800 md:hover:text-white lg:mx-3
+                                    md:text-center"
+                                data-primary="jaffa-800">Orçar</a> 
+                            #}
+                        </div>
+                        <div class="flex flex-col items-center justify-end w-full h-full pt-4 md:w-1/3 md:flex-row md:py-0">
+                            {# <a
+                                data-rounded="rounded-full"
+                                href="#_"
+                                class="inline-flex items-center justify-center px-4 py-2 mr-1 text-base font-medium leading-6 text-jaffa-400
+                                    whitespace-no-wrap transition duration-150 ease-in-out bg-white border border-transparent rounded-full hover:bg-white
+                                    focus:outline-none focus:border-jaffa-700 focus:shadow-outline-jaffa active:bg-jaffa-700"
+                                data-primary="jaffa-400">Sign Up</a> 
+                            #}
+                        </div>
+                    </div>
+                </div>
+                {# <div
+                    @click="showMenu = !showMenu"
+                    class="absolute right-0 z-50 flex flex-col items-end w-10 h-10 p-2 mr-4 rounded-full cursor-pointer md:hidden
+                        hover:bg-gray-900 hover:bg-opacity-10 text-gray-100"
+                    :class="{ 'text-gray-400': showMenu, 'text-gray-100': !showMenu }">
+                    <svg
+                        class="w-6 h-6"
+                        x-show="!showMenu"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg
+                        class="w-6 h-6"
+                        x-show="showMenu"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </div> #}
+            </div>
+        </nav>
+        
+        <div class="my-32 lg:my-16 rounded-lg shadow-sm">
+            <div x-data="simulationForm" class="w-full p-8 xl:p-16">
+                <form @submit.prevent="calculate" class="w-full flex flex-col flex-wrap md:flex-row gap-4 md:items-end"/>
+                    <input
+                        type="hidden"
+                        name="agency"
+                        id="agency"
+                        value="734672277"
+                        required>
+
+                    <div class="flex-1">
+                        <label for="zipCode" class="block text-gray-200 font-bold mb-2">CEP</label>
+                        <input
+                            type="text"
+                            name="zipCode"
+                            id="zipCode"
+                            placeholder="Digite seu CEP"
+                            class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent text-white"
+                            x-mask="99999-999"
+                            x-model="zipCode"
+                            x-on:change.debounce.100ms="zipCode.length === 9 && fetchPowerDistributors()"
+                            required>
+                    </div>
+
+                    <div class="flex-1">
+                        <label for="energy-consumption" class="block text-gray-200 font-bold mb-2">Consumo médio de energia</label>
+                        <div class="flex w-full text-white px-4 py-0 border border-gray-200 rounded-lg shadow-sm">
+                            <span class="flex select-none items-center px-3">R$</span>
+                            <input
+                                type="number"
+                                step="0.01"
+                                min="0.00"
+                                max="1000000.00"
+                                name="energy-consumption"
+                                id="energy-consumption"
+                                placeholder="0,00"
+                                class="block flex-1 border-0 bg-transparent py-4 pl-0 text-sm placeholder:text-gray-200 focus:ring-0 text-white"
+                                x-model="energyConsumption"
+                                required>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <label for="name" class="block text-gray-200 font-bold mb-2">Concessionária</label>
+                        
+                        <select class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-transparent text-white"
+                              x-model="powerDistributorId"
+                              x-bind:disabled="loading || powerDistributors.length === 0"
+                              required>
+                            <option value="" selected disabled>Selecione...</option>
+                            <template x-for="powerDistributor in powerDistributors" :key="powerDistributor.id">
+                                <option x-text="powerDistributor.name" :value="powerDistributor.id"></option>
+                            </template>
+                        </select>
+                    </div>
+                    <button
+                        x-init="buttonText = defaultButtonText = 'Faça uma simulação'"
+                        type="submit"
+                        :disabled="loading"
+                        class="w-full md:flex-1 rounded-lg bg-jaffa-400 px-5 py-4 text-sm font-medium text-white border-transparent border">
+                        <span x-text="buttonText"></span>
+                    </button>
+                </form>
+
+                <div x-show.transition.opacity.duration.500ms="monthlyLoanInstallmentAmount || monthlyLoanInstallments || payback" style="display: none;">
+                    <div class="grid grid-cols-1 gap-8 my-16 md:grid-cols-3">
+                        <div class="relative flex flex-col items-center px-8 py-12 space-y-4 overflow-hidden border border-white rounded-xl" data-rounded="rounded-xl" data-rounded-max="rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            
+                            <h4 class="text-xl font-medium text-white" x-text="monthlyLoanInstallmentAmount"></h4>
+                            <p class="text-base text-center text-gray-300">Valor mensal estimado do financiamento</p>
+                        </div>
+
+                        <div class="relative flex flex-col items-center px-8 py-12 space-y-4 overflow-hidden border border-white rounded-xl" data-rounded="rounded-xl" data-rounded-max="rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                            </svg>
+
+                            <h4 class="text-xl font-medium text-white" x-text="monthlyLoanInstallments">60 meses</h4>
+                            <p class="text-base text-center text-gray-300">
+                            Prazo total do financiamento com parcelas fixas</p>
+                        </div>
+
+                        <div class="relative flex flex-col items-center px-8 py-12 space-y-4 overflow-hidden border border-white rounded-xl" data-rounded="rounded-xl" data-rounded-max="rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>                          
+                            <h4 class="text-xl font-medium text-white" x-text="payback">5 anos e 3 meses</h4>
+                            <p class="text-base text-center text-gray-300">Payback: tempo total estimado para o retorno do investimento</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-400 text-sm">
+                        Os valores obtidos são aproximados, uma vez que existem outros fatores que podem interferir no custo do projeto, como as condições climáticas e relacionadas a instalação. Para determinar com precisão o valor do projeto é necessário a realização de um orçamento completo que pode incluir avaliação do local de instalação.
+                    </p>
+
+                    <div class="my-12 text-center">
+                        <span>
+                            <a href="#contact" type="button" class="px-8 py-4 text-base font-bold leading-6 text-jaffa-400 bg-white border border-transparent rounded-full hover:bg-jaffa-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jaffa-400">
+                                Solicite um orçamento
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <script src="/js/simulation.js?v={% version %}"></script>
+
+            </div>
+        </div>
+
+        {# 
+        
+        <div role="status" class="max-w-sm animate-pulse">
+            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
+            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
+            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
+            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+            <span class="sr-only">Loading...</span>
+        </div>
+
+        #}
+        
+    </div>
+</section>

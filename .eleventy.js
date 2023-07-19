@@ -39,6 +39,7 @@ module.exports = function (eleventyConfig) {
 
   // COPY ALPINEJS
   eleventyConfig.addPassthroughCopy({ './node_modules/alpinejs/dist/cdn.js': './js/alpine.js' })
+  eleventyConfig.addPassthroughCopy({ './node_modules/@alpinejs/mask/dist/cdn.js': './js/alpine-mask.js' })
 
   eleventyConfig.addShortcode('version', function () {
     return now

@@ -19,5 +19,8 @@
     "postcss": "^8.3.5",
     "postcss-import": "^14.0.0",
     "tailwindcss": "^2.2.4"
+  },
+  "dependencies": {
+    "@alpinejs/mask": "^3.12.3"
   }
 }
