@@ -99,7 +99,7 @@
             <div class="bg-white lg:my-16 rounded-lg shadow-sm col-span-5 lg:col-span-2">
                 <div class="flex flex-col items-start justify-start w-full p-10 lg:p-16 xl:p-24">
                     <h4 class="w-full text-3xl font-bold">Faça uma simulação</h4>
-                    <form x-data="contactForm" @submit.prevent="submitForm" class="w-full mb-0 mt-8 space-y-4">
+                    <form x-data="simulationForm" @submit.prevent="sendToSimulation" class="w-full mb-0 mt-8 space-y-4">
                         <input
                             type="hidden"
                             name="agency"
@@ -115,7 +115,9 @@
                                 id="zip"
                                 placeholder="Digite seu CEP"
                                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                x-model="data.zip"
+                                x-mask="99999-999"
+                                x-model="zipCode"
+                                x-on:change.debounce.100ms="zipCode.length === 9 && fetchPowerDistributors()"
                                 required>
                         </div>
                         <div>
@@ -131,29 +133,33 @@
                                     id="energy-consumption"
                                     placeholder="0,00"
                                     class="block flex-1 border-0 bg-transparent py-0 pl-1 placeholder:text-gray-400 focus:ring-0"
-                                    x-model="data.energyConsumption"
+                                    x-model="energyConsumption"
                                     required>
                             </div>
                         </div>
+
                         <div>
                             <label for="name" class="block text-gray-700 font-bold mb-">Concessionária</label>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                placeholder="Selecione..."
-                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                x-model="data.fullName"
+                        
+                            <select class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                x-model="powerDistributorId"
+                                x-bind:disabled="loading || powerDistributors.length === 0"
                                 required>
+                                <option value="" selected disabled>Selecione...</option>
+                                <template x-for="powerDistributor in powerDistributors" :key="powerDistributor.id">
+                                    <option x-text="powerDistributor.name" :value="powerDistributor.id"></option>
+                                </template>
+                            </select>
                         </div>
                         <button
+                            x-init="buttonText = defaultButtonText = 'Enviar'"
                             type="submit"
                             :disabled="loading"
                             class="w-full rounded-lg bg-jaffa-400 px-5 py-3 text-sm font-medium text-white">
                             <span x-text="buttonText">Enviar</span>
                         </button>
-
                     </form>
+                    <script src="/js/simulation.js?v={% version %}"></script>
                 </div>
             </div>
         </div>
