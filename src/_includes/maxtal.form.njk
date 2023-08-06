@@ -1,126 +1,192 @@
-<section id="contact" class="w-full bg-white tails-selected-element bg-gray-100 lg:py-10">
-    <div class="mx-auto max-w-7xl">
-        <div class="flex flex-col lg:flex-row">
-            <div class="relative w-full bg-cover w-6/12">
-                <div class="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0">
-                    <div class="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl">
-                        <div class="relative top-0">
-                            <img src="/img/maxtal.png" class="object-cover mt-3 mr-5 w-60">
-                        </div>
-                        <p class="text-xl text-gray-700">
-                            Contrate Energia solar para seu imóvel com quem você sabe que pode confiar. Energia solar ofercida a você em parceria
-                            com a Maxtal corretora
-                        </p>
-                    </div>
-                </div>
+<section
+  id="contact"
+  class="w-full bg-white tails-selected-element bg-gray-100 lg:py-10"
+>
+  <div class="mx-auto max-w-7xl">
+    <div class="flex flex-col lg:flex-row">
+      <div class="relative w-full bg-cover w-6/12">
+        <div
+          class="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0"
+        >
+          <div
+            class="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl"
+          >
+            <div class="relative top-0">
+              <img src="/img/maxtal.png" class="object-cover mt-3 mr-5 w-60" />
             </div>
-            <div class="w-full bg-white w-6/12 lg:rounded-lg shadow-sm">
-                <div class="flex flex-col items-start justify-start w-full h-full p-10 lg:p-16 xl:p-24">
-                    <h4 class="w-full text-3xl font-bold">Solicite um orçamento</h4>
-                    <form x-data="contactForm" @submit.prevent="submitForm" class="w-full mb-0 mt-8 space-y-4">
-                        <input
-                            type="hidden"
-                            name="agency"
-                            id="agency"
-                            value="734672277"
-                            required>
-                        <div>
-                            <label for="name" class="block text-gray-700 font-bold mb-2">Nome completo</label>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                placeholder="Digite seu nome"
-                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                x-model="data.fullName"
-                                required>
-                        </div>
-                        <div>
-                            <label for="email" class="block text-gray-700 font-bold mb-2">E-mail</label>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                placeholder="Digite seu e-mail"
-                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                x-model="data.email"
-                                required>
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-gray-700 font-bold mb-2">Telefone</label>
-                            <input
-                                type="tel"
-                                name="phone"
-                                id="phone"
-                                placeholder="Digite seu telefone"
-                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                x-model="data.phone"
-                                required>
-                        </div>
-                        <div>
-                            <label for="zip" class="block text-gray-700 font-bold mb-2">CEP</label>
-                            <input
-                                type="text"
-                                name="zip"
-                                id="zip"
-                                placeholder="Digite seu CEP"
-                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                x-model="data.zip"
-                                required>
-                        </div>
-                        <div>
-                            <label for="energy-consumption" class="block text-gray-700 font-bold mb-2">Consumo médio de energia</label>
-                            <div class="flex w-full px-4 py-3 border border-gray-200 rounded-lg shadow-sm">
-                                <span class="flex select-none items-center px-3">R$</span>
-                                <input
-                                    type="number"
-                                    step="0.01"
-                                    min="0.00"
-                                    max="1000000.00"
-                                    name="energy-consumption"
-                                    id="energy-consumption"
-                                    placeholder="0,00"
-                                    class="block flex-1 border-0 bg-transparent py-0 pl-1 placeholder:text-gray-400 focus:ring-0"
-                                    x-model="data.energyConsumption"
-                                    required>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="realtor-id" class="block text-gray-700 font-bold mb-2">CRECI</label>
-                            <input
-                                type="text"
-                                name="realtor-id"
-                                id="realtor-id"
-                                placeholder="Digite o CRECI do corretor"
-                                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                x-model="data.creci"
-                                required>
-                        </div>
-                        <button
-                            type="submit"
-                            :disabled="loading"
-                            class="w-full rounded-lg bg-jaffa-400 px-5 py-3 text-sm font-medium text-white">
-                            <svg x-show="loading" class="inline animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            <span x-text="buttonText"></span>
-                        </button>
-
-                        <div x-show="success" class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
-                            <p class="font-bold">Solicitação enviada com sucesso!</p>
-                            <p class="text-sm">Em breve você receberá o contato da nossa equipe</p>
-                        </div>
-
-                        <div x-show="hasError" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                            <strong class="font-bold">Ops!</strong>
-                            <span class="block sm:inline" x-text="errorMessage"></span>
-                        </div>
-                    </form>
-                    <script src="/js/form.js?v={% version %}"></script>
-                    <script src="/js/alpine.js?v={% version %}" defer></script>
-                </div>
-            </div>
+            <p class="text-xl text-gray-700">
+              Contrate Energia solar para seu imóvel com quem você sabe que pode
+              confiar. Energia solar ofercida a você em parceria com a Maxtal
+              corretora
+            </p>
+          </div>
         </div>
+      </div>
+      <div class="w-full bg-white w-6/12 lg:rounded-lg shadow-sm">
+        <div
+          class="flex flex-col items-start justify-start w-full h-full p-10 lg:p-16 xl:p-24"
+        >
+          <h4 class="w-full text-3xl font-bold">Solicite um orçamento</h4>
+          <form
+            x-data="contactForm"
+            @submit.prevent="submitForm"
+            class="w-full mb-0 mt-8 space-y-4"
+          >
+            <input
+              type="hidden"
+              name="agency"
+              id="agency"
+              value="734672277"
+              required
+            />
+            <div>
+              <label for="name" class="block text-gray-700 font-bold mb-2"
+                >Nome completo</label
+              >
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Digite seu nome"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="data.fullName"
+                required
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-gray-700 font-bold mb-2"
+                >E-mail</label
+              >
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Digite seu e-mail"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="data.email"
+                required
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-gray-700 font-bold mb-2"
+                >Telefone</label
+              >
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                placeholder="Digite seu telefone"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="data.phone"
+                required
+              />
+            </div>
+            <div>
+              <label for="zip" class="block text-gray-700 font-bold mb-2"
+                >CEP</label
+              >
+              <input
+                type="text"
+                name="zip"
+                id="zip"
+                placeholder="Digite seu CEP"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="data.zip"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="energy-consumption"
+                class="block text-gray-700 font-bold mb-2"
+                >Consumo médio de energia</label
+              >
+              <div
+                class="flex w-full px-4 py-3 border border-gray-200 rounded-lg shadow-sm"
+              >
+                <span class="flex select-none items-center px-3">R$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0.00"
+                  max="1000000.00"
+                  name="energy-consumption"
+                  id="energy-consumption"
+                  placeholder="0,00"
+                  class="block flex-1 border-0 bg-transparent py-0 pl-1 placeholder:text-gray-400 focus:ring-0"
+                  x-model="data.energyConsumption"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label for="realtor-id" class="block text-gray-700 font-bold mb-2"
+                >CRECI</label
+              >
+              <input
+                type="text"
+                name="realtor-id"
+                id="realtor-id"
+                placeholder="Digite o CRECI do corretor"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="data.creci"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              :disabled="loading"
+              class="w-full rounded-lg bg-jaffa-400 px-5 py-3 text-sm font-medium text-white"
+              :class="{'opacity-50 cursor-not-allowed': loading}"
+            >
+              <svg
+                x-show="loading"
+                class="inline animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <span x-text="buttonText"></span>
+            </button>
+
+            <div
+              x-show="success"
+              class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3"
+              role="alert"
+            >
+              <p class="font-bold">Solicitação enviada com sucesso!</p>
+              <p class="text-sm">
+                Em breve você receberá o contato da nossa equipe
+              </p>
+            </div>
+
+            <div
+              x-show="hasError"
+              class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <strong class="font-bold">Ops!</strong>
+              <span class="block sm:inline" x-text="errorMessage"></span>
+            </div>
+          </form>
+          <script src="/js/form.js?v={% version %}"></script>
+          <script src="/js/alpine.js?v={% version %}" defer></script>
+        </div>
+      </div>
     </div>
+  </div>
 </section>

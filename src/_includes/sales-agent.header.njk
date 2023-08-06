@@ -1,0 +1,188 @@
+<section
+  class="w-full px-3 antialiased bg-black lg:px-6"
+  data-primary="jaffa-400"
+>
+  <div class="mx-auto max-w-7xl">
+    {% include "navigation.njk" %}
+
+    <div class="mx-auto max-w-7xl grid grid-cols-5 gap-0 pb-3 lg:pb-0">
+      <div class="pt-64 pb-32 col-span-5 lg:col-span-3 px-10 max-w-xl">
+        <h1
+          class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl"
+        >
+          <span>Seja um corretor de energia solar</span>
+        </h1>
+        <div
+          class="mt-6 text-sm text-jaffa-100 md:mt-12 sm:text-base md:max-w-xl md:text-lg xl:text-xl"
+          data-primary="jaffa-100"
+        >
+          Expanda seus horizontes e ganhe mais ajudando clientes a abraçar o
+          futuro solar.
+        </div>
+      </div>
+
+      <div
+        class="bg-white lg:my-16 rounded-lg shadow-sm col-span-5 lg:col-span-2"
+      >
+        <div class="flex flex-col items-start justify-start w-full p-10">
+          <form
+            x-data="salesAgentForm"
+            @submit.prevent="createSalesAgent"
+            class="w-full mb-0 md:mt-0 space-y-4"
+          >
+            <div>
+              <label for="phone" class="block text-gray-700 font-bold mb-2"
+                >Telefone</label
+              >
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                placeholder="Digite seu telefone com DDD"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="phone"
+                x-mask="99 99999 9999"
+                pattern="^\d{2} \d{5} \d{4}$"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="email" class="block text-gray-700 font-bold mb-2"
+                >E-mail</label
+              >
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Digite seu e-mail"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="email"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="fullName" class="block text-gray-700 font-bold mb-2"
+                >Nome completo</label
+              >
+              <input
+                type="text"
+                name="fullName"
+                id="fullName"
+                placeholder="Digite seu nome completo"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="fullName"
+                required
+              />
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="isRealtor"
+                x-model="isRealtor"
+                class="rounded border-gray-300 text-jaffa-400"
+              />
+              <label for="isRealtor" class="text-gray-700 font-bold"
+                >Sou corretor de imóveis</label
+              >
+            </div>
+
+            <!-- Campo CRECI que é mostrado quando isRealtor é true -->
+            <div x-show="isRealtor">
+              <label for="licenseId" class="block text-gray-700 font-bold mb-2"
+                >CRECI</label
+              >
+              <input
+                type="text"
+                name="licenseId"
+                id="licenseId"
+                placeholder="Digite seu CRECI"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="licenseId"
+                x-bind:required="isRealtor"
+              />
+            </div>
+
+            <!-- Campo Profissão que é mostrado quando isRealtor é false -->
+            <div x-show="!isRealtor">
+              <label for="occupation" class="block text-gray-700 font-bold mb-2"
+                >Profissão</label
+              >
+              <input
+                type="text"
+                name="occupation"
+                id="occupation"
+                placeholder="Digite sua profissão"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="occupation"
+                x-bind:required="!isRealtor"
+              />
+            </div>
+
+            <div>
+              <label
+                for="cityAndState"
+                class="block text-gray-700 font-bold mb-2"
+                >Cidade e Estado</label
+              >
+              <input
+                type="text"
+                name="cityAndState"
+                id="cityAndState"
+                placeholder="Cidade/Estado"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="cityAndState"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="agency" class="block text-gray-700 font-bold mb-2"
+                >Imobiliária (Opcional)</label
+              >
+              <input
+                type="text"
+                name="agency"
+                id="agency"
+                placeholder="Digite o nome da sua imobiliária (se aplicável)"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                x-model="agency"
+              />
+            </div>
+
+            <button
+              type="submit"
+              :disabled="loading"
+              class="w-full rounded-lg bg-jaffa-400 px-5 py-3 text-sm font-medium text-white"
+            >
+              <svg
+                x-show="loading"
+                class="inline animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <span x-text="buttonText"></span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
