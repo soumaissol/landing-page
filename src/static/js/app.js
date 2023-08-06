@@ -9,33 +9,36 @@ const BrReais = new Intl.NumberFormat("pt-BR", {
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
+const showModal = (title, content) => {
+  const event = new CustomEvent("showmodalevent", {
+    detail: {
+      title,
+      content,
+    },
+  });
+  window.dispatchEvent(event);
+}
+
 const contactForm = () => ({
-  success: false,
-  hasError: false,
   loading: false,
   buttonText: "Enviar",
-  errorMessage: "",
   data: {
     email: "",
     phone: "",
     fullName: "",
     zip: "",
     energyConsumption: "",
-    creci: "",
+    salesAgentLicenseId: "",
   },
   async submitForm() {
     console.log(JSON.stringify(this.data));
-
-    this.errorMessage = "";
-    this.hasError = false;
     this.loading = true;
-    this.buttonText = "Processando...";
-    this.success = false;
+    this.buttonText = "Enviando...";
 
     const body = this.data;
     body.zip = (body.zip || "").replaceAll(/[\-]/g, "");
 
-    const response = await fetch(`${PUBLIC_API_BASE_URL}/contacts`, {
+    const response = await fetch(`${PUBLIC_API_BASE_URL}/customerLead`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,24 +48,27 @@ const contactForm = () => ({
     });
 
     if (response.ok) {
-      this.success = true;
+      showModal('Solicitação enviada com sucesso!', 'Em breve você receberá o contato da nossa equipe')
 
       for (let prop in this.data) {
         this.data[prop] = "";
       }
-    } else {
-      const body = await response.text();
-      let error;
-      try {
-        const json = JSON.parse(body);
-        error = json.errors[0]?.message || UNEXPECTED_ERROR;
-      } catch (exception) {
-        console.error(exception);
-        error = UNEXPECTED_ERROR;
-      }
+    } else if (response.status === 400) {
+      const result = await response.json();
+      console.error(JSON.stringify(result));
 
-      this.hasError = true;
-      this.errorMessage = error;
+      showModal(
+        "Parece que algumas informações fornecidas não são válidas",
+        result.message
+      );
+    } else {
+      const result = await response.text();
+      console.error(result);
+
+      showModal(
+        UNEXPECTED_ERROR,
+        "Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde"
+      );
     }
 
     this.loading = false;
@@ -288,15 +294,6 @@ const createSalesAgentForm = () => ({
   reset() {
     Object.assign(this, this.initValues());
   },
-  showModal(title, content) {
-    const event = new CustomEvent("showmodalevent", {
-      detail: {
-        title,
-        content,
-      },
-    });
-    window.dispatchEvent(event);
-  },
   async createSalesAgent() {
     const body = this.getValues();
 
@@ -313,7 +310,7 @@ const createSalesAgentForm = () => ({
     });
 
     if (response.ok) {
-      this.showModal(
+      showModal(
         "Suas informações foram recebidas pela nossa equipe!",
         "Em breve entraremos em contato para seguir com o seu registro"
       );
@@ -323,7 +320,7 @@ const createSalesAgentForm = () => ({
       const result = await response.json();
       console.error(JSON.stringify(result));
 
-      this.showModal(
+      showModal(
         "Parece que algumas informações fornecidas não são válidas",
         result.message
       );
@@ -331,7 +328,7 @@ const createSalesAgentForm = () => ({
       const result = await response.text();
       console.error(result);
 
-      this.showModal(
+      showModal(
         UNEXPECTED_ERROR,
         "Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde"
       );

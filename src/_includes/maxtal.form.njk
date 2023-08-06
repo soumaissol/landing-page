@@ -129,7 +129,7 @@
                 id="realtor-id"
                 placeholder="Digite o CRECI do corretor"
                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                x-model="data.creci"
+                x-model="data.salesAgentLicenseId"
                 required
               />
             </div>
@@ -162,26 +162,6 @@
               </svg>
               <span x-text="buttonText"></span>
             </button>
-
-            <div
-              x-show="success"
-              class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3"
-              role="alert"
-            >
-              <p class="font-bold">Solicitação enviada com sucesso!</p>
-              <p class="text-sm">
-                Em breve você receberá o contato da nossa equipe
-              </p>
-            </div>
-
-            <div
-              x-show="hasError"
-              class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-              role="alert"
-            >
-              <strong class="font-bold">Ops!</strong>
-              <span class="block sm:inline" x-text="errorMessage"></span>
-            </div>
           </form>
           <script src="/js/form.js?v={% version %}"></script>
           <script src="/js/alpine.js?v={% version %}" defer></script>
