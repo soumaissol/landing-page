@@ -42,6 +42,7 @@ const contactForm = () => ({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Accept-Language": "pt-BR",
         Accept: "application/json",
       },
       body: JSON.stringify(body),
@@ -111,6 +112,7 @@ const calculate = async ({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Accept-Language": "pt-BR",
             Accept: "application/json",
           },
           body: JSON.stringify({
@@ -247,6 +249,7 @@ const simulationForm = () => ({
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Accept-Language": "pt-BR",
             Accept: "application/json",
           },
         }
@@ -304,6 +307,7 @@ const createSalesAgentForm = () => ({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Accept-Language": "pt-BR",
         Accept: "application/json",
       },
       body: JSON.stringify(body),
